@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 
 ensemblePath = '../models/ensemble_model 1.sav'
+ensemble_model = joblib.load('./models/ensemble_model 1.sav')
 
 st.title("ensembleModel.py")
 st.write("this is ensembleModel.py")
@@ -40,6 +41,25 @@ def on_submit(CHROM, POS, REF, ALT, AF_ESP, AF_EXAC, AF_TGP, CLNVC, ORIGIN, Alle
 
     st.write("Data after scaling and encoding:")
     st.write(data)
+    
+    required_columns = ['CHROM', 'POS', 'REF', 'ALT', 'AF_ESP', 'AF_EXAC', 'AF_TGP', 'CLNVC', 'ORIGIN', 'CLASS','Allele', 'IMPACT', ]
+    for col in required_columns:
+        if col not in data.columns:
+            data[col] = 0 
+            
+    data = data[required_columns]
+    
+    st.write("Data after scaling, encoding, and ensuring column alignment:")
+    st.write(data)
+    
+    prediction = ensemble_model.predict(data)
+
+    # เก็บผลการพยากรณ์ในตัวแปร
+    prediction_result = prediction[0]  # รับค่าผลลัพธ์จากการพยากรณ์ (ค่าผลลัพธ์อาจจะเป็นตัวแปรหนึ่งค่าหรืออาเรย์)
+
+    # แสดงผลการพยากรณ์
+    st.write("Prediction Result:")
+    st.write(prediction_result)
     
 with st.form("input_form"):
     CHROM = st.text_input("CHROM", "1")
