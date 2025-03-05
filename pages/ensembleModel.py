@@ -22,11 +22,6 @@ def on_submit(CHROM, POS, REF, ALT, AF_ESP, AF_EXAC, AF_TGP, CLNVC, ORIGIN, Alle
 
     st.write("Original data:")
     st.write(data)
-    
-    #numeric_data = data.select_dtypes(include=['number'])
-
-    #scaler.fit(numeric_data)
-    #print(scaler.feature_names_in_)
 
     #streamlit run app.py
  
@@ -37,8 +32,7 @@ def on_submit(CHROM, POS, REF, ALT, AF_ESP, AF_EXAC, AF_TGP, CLNVC, ORIGIN, Alle
     for col in data.columns:
         if col in labelEn and col not in columns_to_scale:
             data[col] = labelEn[col].transform(data[col])
-
-
+            
     st.write("Data after scaling and encoding:")
     st.write(data)
     
@@ -49,15 +43,10 @@ def on_submit(CHROM, POS, REF, ALT, AF_ESP, AF_EXAC, AF_TGP, CLNVC, ORIGIN, Alle
             
     data = data[required_columns]
     
-    st.write("Data after scaling, encoding, and ensuring column alignment:")
-    st.write(data)
-    
     prediction = ensemble_model.predict(data)
 
-    # เก็บผลการพยากรณ์ในตัวแปร
-    prediction_result = prediction[0]  # รับค่าผลลัพธ์จากการพยากรณ์ (ค่าผลลัพธ์อาจจะเป็นตัวแปรหนึ่งค่าหรืออาเรย์)
+    prediction_result = prediction[0]
 
-    # แสดงผลการพยากรณ์
     st.write("Prediction Result:")
     st.write(prediction_result)
     
@@ -108,7 +97,8 @@ with st.form("input_form"):
     CADD_RAW = st.number_input("CADD_RAW", value=2.0)
     BLOSUM62 = st.number_input("BLOSUM62", value=2.0)
 
-        
+    st.write("source dataset: https://www.kaggle.com/datasets/kevinarvai/clinvar-conflicting")    
+    
     submitted = st.form_submit_button("Submit")
         
     if submitted:
