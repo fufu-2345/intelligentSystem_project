@@ -6,6 +6,6 @@ import os
 from sklearn.metrics import precision_score
 
 
-## streamlit run app.py
-
-
+## streamlit run intro.py
+st.title("6604062610225 Kittisak Ploysumrit")
+st.write("test test")
