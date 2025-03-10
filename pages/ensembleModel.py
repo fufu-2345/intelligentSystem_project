@@ -47,8 +47,11 @@ def on_submit(CHROM, POS, REF, ALT, AF_ESP, AF_EXAC, AF_TGP, CLNVC, ORIGIN, Alle
 
     prediction_result = prediction[0]
 
-    st.write("Prediction Result:")
-    st.write(prediction_result)
+    st.write("**Prediction Result:**")
+    if(prediction_result == 0):
+        st.write("0 (The variant has consistent classifications)")
+    else:
+        st.write("1 (The variant has conflicting classifications)")
     
 with st.form("input_form"):
     CHROM = st.text_input("CHROM", "1")
@@ -58,46 +61,12 @@ with st.form("input_form"):
     AF_ESP = st.number_input("AF_ESP", value=0.0771)
     AF_EXAC = st.number_input("AF_EXAC", value=0.10020)
     AF_TGP = st.number_input("AF_TGP", value=0.1066)
-    CLNDISDB = st.text_input("CLNDISDB", "MedGen:CN169374")
-    CLNDISDBINCL = st.text_input("CLNDISDBINCL", "AA")
-    CLNDN = st.text_input("CLNDN", "not_specified")
-    CLNDNINCL = st.text_input("CLNDNINCL", "1.00081")
-    CLNHGVS = st.text_input("CLNHGVS", "NC_000001.10:g.1168180G>C")
-    CLNSIGINCL = st.text_input("CLNSIGINCL", "-2")
     CLNVC = st.text_input("CLNVC", "single_nucleotide_variant")
-    CLNVI = st.text_input("CLNVI", "UniProtKB_(protein):Q96L58#VAR_059317")
-    MC = st.text_input("MC", "SO:0001583|missense_variant")
     ORIGIN = st.text_input("ORIGIN", "1")
-    SSR = st.text_input("SSR", "AR")
     ALLELE = st.text_input("Allele", "C")
-    CONSEQUENCE = st.text_input("Consequence", "missense_variant")
     IMPACT = st.text_input("IMPACT", "MODERATE")
-    SYMBOL = st.text_input("SYMBOL", "B3GALT6")
-    FEATURE_TYPE = st.text_input("Feature_type", "Transcript")
-    FEATURE = st.text_input("Feature", "NM_080605.3")
-    BIOTYPE = st.text_input("BIOTYPE", "protein_coding")
-    EXON = st.text_input("EXON", "1/1")
-    INTRON = st.text_input("INTRON", "w")
-    CDNA_POSITION = st.text_input("cDNA_position", "552")
-    CDS_POSITION = st.text_input("CDS_position", "522")
-    PROTEIN_POSITION = st.text_input("Protein_position", "174")
-    AMINO_ACIDS = st.text_input("Amino_acids", "E/D")
-    CODONS = st.text_input("Codons", "gaG/gaC")
-    DISTANCE = st.number_input("DISTANCE", value=1, step=1)
-    STRAND = st.text_input("STRAND", "753.159")
-    BAM_EDIT = st.text_input("BAM_EDIT", "AC")
-    SIFT = st.text_input("SIFT", "tolerated")
-    POLYPHEN = st.text_input("PolyPhen", "benign")
-    MOTIF_NAME = st.text_input("MOTIF_NAME", "K1")
-    MOTIF_POS = st.text_input("MOTIF_POS", "431")
-    HIGH_INF_POS = st.text_input("HIGH_INF_POS", "0.0183")
-    MOTIF_SCORE_CHANGE = st.text_input("MOTIF_SCORE_CHANGE", "0.021")
-    LOFTOOL = st.number_input("LoFtool", value=1.053)
-    CADD_PHRED = st.number_input("CADD_PHRED", value=-0.208682)
-    CADD_RAW = st.number_input("CADD_RAW", value=2.0)
-    BLOSUM62 = st.number_input("BLOSUM62", value=2.0)
 
-    st.write("source dataset: https://www.kaggle.com/datasets/kevinarvai/clinvar-conflicting")    
+    st.write("Dataset's source: https://www.kaggle.com/datasets/kevinarvai/clinvar-conflicting")    
     
     submitted = st.form_submit_button("Submit")
         

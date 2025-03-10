@@ -42,7 +42,7 @@ def predict_top_3_speakers(file_path):
 st.title("Speaker Prediction Model")
 st.write("This model predicts the top 3 speakers based on the audio file.")
 
-st.write("source dataset: https://bluearchive.wiki/wiki/Category:Characters_audio")
+st.write("Dataset's source: https://bluearchive.wiki/wiki/Category:Characters_audio")
     
 uploaded = st.file_uploader("Upload an MP3 file", type=["mp3"])
 
