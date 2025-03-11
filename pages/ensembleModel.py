@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
+from pathlib import Path
 import joblib
 
-ensemblePath = '../models/ensemble_model 1.sav'
-ensemble_model = joblib.load('./models/ensemble_model 1.sav')
+basePath = Path(__file__).parent/"models"
+ensemble_model = joblib.load(basePath/"ensemble_model1.sav")
 
 st.title("ensembleModel.py")
-st.write("this is ensembleModel.py")
+st.write("this is ensembleMode l.py")
 
 scaler = joblib.load('./scaler/scaler_model.pkl')
 labelEn = joblib.load('./scaler/label_encoders.pkl')

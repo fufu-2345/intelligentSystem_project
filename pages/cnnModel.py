@@ -4,9 +4,10 @@ import joblib
 from pydub import AudioSegment
 import librosa
 from sklearn.preprocessing import LabelEncoder
+from pathlib import Path
 
-cnnPath = './models/cnn2.sav'
-model = joblib.load(cnnPath)
+basePath = Path(__file__).parent/"models"
+model = joblib.load(basePath/"cnn2.sav")
 
 N_MFCC = 128
 SAMPLE_RATE = 48000

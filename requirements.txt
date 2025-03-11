@@ -6,3 +6,4 @@ numpy
 pydub
 librosa
 uv
+ffmpeg
