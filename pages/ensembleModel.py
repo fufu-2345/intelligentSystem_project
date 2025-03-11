@@ -6,7 +6,7 @@ from pathlib import Path
 import joblib
 
 basePath = Path(__file__).parent.parent/"models"
-ensemble_model = joblib.load(basePath/"ensemble_model1.sav")
+ensemble_model = joblib.load(basePath/"Ensemble_model1.sav")
 
 st.title("ensembleModel.py")
 st.write("this is ensembleMode l.py")
