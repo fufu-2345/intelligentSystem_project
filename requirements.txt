@@ -4,6 +4,4 @@ joblib
 tensorflow
 numpy
 pydub
-os
-io
 librosa

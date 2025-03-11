@@ -2,8 +2,6 @@ import streamlit as st
 import numpy as np
 import joblib
 from pydub import AudioSegment
-import os
-from io import BytesIO
 import librosa
 from sklearn.preprocessing import LabelEncoder
 
