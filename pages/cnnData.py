@@ -27,3 +27,5 @@ st.write("Input layer(Flatten) change input shape to 128x1x1")
 st.write("hidden layer are 3 layer, first second have 1024 and third layer have 512 perceptrons")
 st.write("3 of them have BatchNormalization dropout 0.5 and use activation='LeakyReLU' with alpha 0.1")
 st.write("and lastly output layer use activation='softmax' with 24 perceptrons(24 characters)")
+
+st.write("explain whitch charector")
