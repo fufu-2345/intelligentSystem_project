@@ -6,7 +6,7 @@ import librosa
 from sklearn.preprocessing import LabelEncoder
 from pathlib import Path
 
-basePath = Path(__file__).parent/"models"
+basePath = Path(__file__).parent.parent/"models"
 model = joblib.load(basePath/"cnn2.sav")
 
 N_MFCC = 128

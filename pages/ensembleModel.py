@@ -5,7 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 from pathlib import Path
 import joblib
 
-basePath = Path(__file__).parent/"models"
+basePath = Path(__file__).parent.parent/"models"
 ensemble_model = joblib.load(basePath/"ensemble_model1.sav")
 
 st.title("ensembleModel.py")
