@@ -1,6 +1,8 @@
 import streamlit as st
 
-st.title("Ensemble model")
+st.title("Ensemble model to predict whether a variant will have conflicting clinical classifications.")
+st.write("")
+st.write("")
 st.write("This is an ensemble model consist of 3 models")
 st.write("KNN, SVM and Decision tree")
 st.image("imgs/ensembleEnsemble.png")
