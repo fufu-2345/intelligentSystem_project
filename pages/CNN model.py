@@ -1,60 +1,69 @@
 import streamlit as st
+import numpy as np
+import joblib
+from pydub import AudioSegment
+import librosa
+from sklearn.preprocessing import LabelEncoder
+from pathlib import Path
 
-st.title("Blue Archive character's voice CNN model")
-st.write("")
-st.write("")
-st.title("Dataset")
-st.write("This dataset contain character's audio from Blue Archive game")
-st.write("and I have to download each files one by one")
-st.write("")
-st.write("My dataset contains 24 unique characters")
-st.write("and each character have 20-35 audio files")
-st.write("Totally I have 653 audio files for this dataset")
-st.write("All of them are .mp3 files and are converted into .wav files using Librosa library")
-st.write("After that, the .wav files are converted from time-domain to frequency-domain using MFCC")
-st.write("with sample rate of 48000 sample per second, each for 3 seconds and using MFCC coefficients as 128")
+basePath = Path(__file__).parent.parent/"models"
+model = joblib.load(basePath/"cnn2.sav")
+
+N_MFCC = 128
+SAMPLE_RATE = 48000
+label_map = {'Amau Ako': 0, 'Fuwa Renge': 1, 'Izumimoto Eimi': 2, 'Hakari Atsuko': 3, 'Ichinose Asuna': 4, 'Asahina Pina': 5, 'Wanibuchi Akari': 6, 'Akashi Junko': 7, 'Akeshiro Rumi': 8, 'Aikiyo Fuuka': 9, 'Okusora Ayane': 10, 'Motomiya Chiaki': 11, 'Kozeki Ui': 12, 'Kayama Reijo': 13, 'Shirasu Azusa': 14, 'Murokasa Akane': 15, 'Nemugaki Fubuki': 16, 'Renkawa Cherino': 17, 'Rikuhachima Aru': 18, 'Kurimura Airi': 19, 'Tendou Alice': 20, 'Ushimaki Juri': 21, 'Tsukatsuki Rio': 22, 'Uzawa Reisa': 23}
+def extract_features(file_path):
+    
+    y, sr = librosa.load(file_path, sr=SAMPLE_RATE)
+
+    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=N_MFCC) 
+    features = mfcc.mean(axis=1)  # ใช้เฉพาะ MFCC
+    
+    return features
+
+
+def predict_top_3_speakers(file_path):
+    feature = extract_features(file_path)
+    feature = feature.reshape(1, 128, 1, 1)
+    prediction = model.predict(feature)
+
+    top_3_indices = np.argsort(prediction[0])[::-1][:3]
+
+    top_3_speakers = []
+    for idx in top_3_indices:
+        speaker_id = idx
+        speaker_name = [name for name, id in label_map.items() if id == speaker_id][0]
+        confidence = prediction[0][idx] * 100 
+        top_3_speakers.append((speaker_name, confidence))
+
+    return top_3_speakers
+
+st.title("Speaker Prediction Model")
+st.write("This model predicts the top 3 speakers based on the audio file.")
+
 st.write("Dataset's source: https://bluearchive.wiki/wiki/Category:Characters_audio")
+    
+uploaded = st.file_uploader("Upload an MP3 file", type=["mp3"])
+
+if uploaded is not None:
+    audio = AudioSegment.from_mp3(uploaded)
+    wav_file_path = "uploaded_audio.wav"
+    audio.export(wav_file_path, format="wav")
+
+    top_3_predicted_speakers = predict_top_3_speakers(wav_file_path)
+
+    st.write("Top 3 Predicted Speakers:")
+    for rank, (speaker, confidence) in enumerate(top_3_predicted_speakers, 1):
+        st.write(f"Rank {rank}: {speaker} - Confidence: {confidence:.2f}%")
+
 st.write("")
 st.write("")
-st.title("Feature explaination")
-st.write("**Character's name(target)**")
-st.write("The name of the character in the audio file")
-st.write("**MFCC**")
-st.write("Mel-frequency cepstral coefficients (MFCCs) are coefficients that collectively make up an MFC.")
-st.write("They are derived from a type of cepstral representation of the audio clip.")
-st.write("(A nonlinear 'spectrum-of-a-spectrum')")
-st.write("")
-st.write("")
-st.title("CNN")
-st.write("Input layer(Flatten) change input shape to 128x1x1")
-st.write("There are 3 hidden layers, each layer has 1024, 1024, 512 perceptrons respectively")
-st.write("All of them have BatchNormalization dropout 0.5 and use activation funtion='LeakyReLU' with alpha 0.1")
-st.write("Lastly, the output layer uses activation funtion='softmax' with 24 perceptrons(24 characters)")
-st.write("")
-st.write("")
-st.write("This model can predict only some of the characters in the game")
-st.title("Here is the list of the characters")
-st.write("1.Kurimura Airi")
-st.write("2.Murokasa Akane")
-st.write("3.Wanibuchi Akari")
-st.write("4.Amau Ako")
-st.write("5.Tendou Alice")
-st.write("6.Rikuhachima Aru")
-st.write("7.Ichinose Asuna")
-st.write("8.Hakari Atsuko")
-st.write("9.Okusora Ayane")
-st.write("10.Shirasu Azusa")
-st.write("11.Renkawa Cherino")
-st.write("12.Motomiya Chiaki")
-st.write("13.Izumimoto Eimi")
-st.write("14.Nemugaki Fubuki")
-st.write("15.Aikiyo Fuuka")
-st.write("16.Akashi Junko")
-st.write("17.Ushimaki Juri")
-st.write("18.Asahina Pina")
-st.write("19.Kayama Reijo")
-st.write("20.Uzawa Reisa")
-st.write("21.Fuwa Renge")
-st.write("22.Tsukatsuki Rio")
-st.write("23.Akeshiro Rumi")
-st.write("24.Kozeki Ui")
+st.title("download audio file guide") 
+st.write("1.choose the character you want to download")
+st.image("imgs/1.png")
+st.write("2.choose the voice line you want to download")
+st.image("imgs/2.png")
+st.write("3.click i button")
+st.image("imgs/3.png")
+st.write("4.click the download button")
+st.image("imgs/4.png")
