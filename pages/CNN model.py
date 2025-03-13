@@ -59,7 +59,7 @@ if uploaded is not None:
 st.write("")
 st.write("")
 st.title("download audio file guide") 
-st.write("1.choose the character you want to download")
+st.write("1.choose the character you want")
 st.image("imgs/1.png")
 st.write("2.choose the voice line you want to download")
 st.image("imgs/2.png")
