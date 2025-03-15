@@ -8,8 +8,7 @@ import joblib
 basePath = Path(__file__).parent.parent/"models"
 ensemble_model = joblib.load(basePath/"Ensemble_model1.sav")
 
-st.title("ensembleModel.py")
-st.write("this is ensembleMode l.py")
+st.title("Ensemble model conflicting clinical classifications")
 
 scaler = joblib.load('./scaler/scaler_model.pkl')
 labelEn = joblib.load('./scaler/label_encoders.pkl')

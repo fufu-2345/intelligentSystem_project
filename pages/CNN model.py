@@ -54,16 +54,16 @@ if uploaded is not None:
 
     st.write("Top 3 Predicted Speakers:")
     for rank, (speaker, confidence) in enumerate(top_3_predicted_speakers, 1):
-        st.write(f"Rank {rank}: {speaker} - Confidence: {confidence:.2f}%")
+        st.write(f"Rank {rank}: {speaker} - Confidence: {confidence:f}%")
 
 st.write("")
 st.write("")
-st.title("download audio file guide") 
-st.write("1.choose the character you want")
+st.title("Download audio file guide") 
+st.write("1.Choose the character you want")
 st.image("imgs/1.png")
-st.write("2.choose the voice line you want to download")
+st.write("2.Choose the voice line you want to download")
 st.image("imgs/2.png")
-st.write("3.click i button")
+st.write("3.Click more information button")
 st.image("imgs/3.png")
-st.write("4.click the download button")
+st.write("4.Click the download button")
 st.image("imgs/4.png")
